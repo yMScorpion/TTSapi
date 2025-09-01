@@ -1,0 +1,114 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "row",
+      "title": "GPU",
+      "collapsed": false,
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU Utilization (%)",
+      "targets": [{
+        "expr": "gpu_utilization_percent",
+        "legendFormat": "util%"
+      }],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 1}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU Temperature (°C)",
+      "targets": [{
+        "expr": "gpu_temperature_celsius",
+        "legendFormat": "temp"
+      }],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 1}
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU Memory Usage (GB)",
+      "targets": [
+        {"expr": "gpu_memory_total_bytes", "legendFormat": "total"},
+        {"expr": "gpu_memory_used_bytes", "legendFormat": "used"}
+      ],
+      "transformations": [
+        {"id": "labelsToFields"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "decgbytes"}},
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 9}
+    },
+
+    {
+      "type": "row",
+      "title": "API Latency & Throughput",
+      "collapsed": false,
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 17}
+    },
+    {
+      "type": "timeseries",
+      "title": "Request duration (p50/p95/p99)",
+      "targets": [
+        {"expr": "histogram_quantile(0.5, sum by (le,handler) (http_request_duration_seconds_bucket))", "legendFormat": "p50 {{handler}}"},
+        {"expr": "histogram_quantile(0.95, sum by (le,handler) (http_request_duration_seconds_bucket))", "legendFormat": "p95 {{handler}}"},
+        {"expr": "histogram_quantile(0.99, sum by (le,handler) (http_request_duration_seconds_bucket))", "legendFormat": "p99 {{handler}}"}
+      ],
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 18}
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests per second",
+      "targets": [
+        {"expr": "sum(rate(http_requests_total[1m])) by (handler,status)", "legendFormat": "rps {{handler}} {{status}}"}
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 26}
+    },
+    {
+      "type": "timeseries",
+      "title": "HTTP Status Codes",
+      "targets": [
+        {"expr": "sum(rate(http_requests_total[1m])) by (status)", "legendFormat": "{{status}}"}
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 26}
+    },
+
+    {
+      "type": "row",
+      "title": "Benchmark (/v1/bench)",
+      "collapsed": false,
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 34}
+    },
+    {
+      "type": "table",
+      "title": "Últimos benchmarks (public)",
+      "targets": [
+        {
+          "datasource": {"type": "yesoreyeram-infinity-datasource", "uid": "infinity"},
+          "type": "json",
+          "url": "http://api:8000/v1/bench/public?text=Hello%20world&model=LJSpeech&steps_list=5,10,15&repeats=1",
+          "format": "table",
+          "root_selector": "steps",
+          "columns": [
+            {"selector": "steps", "text": "steps"},
+            {"selector": "avg_sec", "text": "avg_s"},
+            {"selector": "min_sec", "text": "min_s"},
+            {"selector": "max_sec", "text": "max_s"}
+          ]
+        }
+      ],
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 35}
+    }
+  ],
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["styletts2"],
+  "templating": {"list": []},
+  "time": {"from": "now-6h", "to": "now"},
+  "timepicker": {},
+  "timezone": ""
+}

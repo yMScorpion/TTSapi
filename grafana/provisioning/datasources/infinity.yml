@@ -1,0 +1,13 @@
+apiVersion: 1
+
+datasources:
+  - name: Infinity
+    type: yesoreyeram-infinity-datasource
+    uid: infinity
+    access: proxy
+    isDefault: false
+    jsonData:
+      url: ""
+      auth_method: none
+      tlsSkipVerify: false
+      httpMethod: GET

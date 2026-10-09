@@ -1,0 +1,50 @@
+{
+  "kind": "static-api-config-inspection",
+  "explicit_routes": [
+    [
+      "POST",
+      "/v1/tts"
+    ],
+    [
+      "POST",
+      "/v1/jobs"
+    ],
+    [
+      "GET",
+      "/v1/voices"
+    ],
+    [
+      "POST",
+      "/v1/voices"
+    ],
+    [
+      "DELETE",
+      "/v1/voices/{name}"
+    ],
+    [
+      "POST",
+      "/v1/bench"
+    ],
+    [
+      "GET",
+      "/v1/bench/public"
+    ],
+    [
+      "GET",
+      "/healthz"
+    ],
+    [
+      "POST",
+      "/auth/token"
+    ]
+  ],
+  "route_count": 9,
+  "formats": [
+    "wav",
+    "mp3",
+    "flac",
+    "ogg"
+  ],
+  "visualization_panels": 7,
+  "inference_executed": false
+}
